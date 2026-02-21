@@ -1,9 +1,0 @@
-EJECUCION DEL ENTORNO
-
-
-1. Dale permisos de ejecución:
-chmod +x red_sdn.sh
-
-2. Ejcutar el script con sudo:
-./red_sdn.sh
-
