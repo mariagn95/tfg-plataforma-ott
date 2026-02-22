@@ -27,7 +27,7 @@ def run():
     url = "http://10.0.0.1:8080/master.m3u8"
     
     if reproductor == "vlc":
-        cmd_player = f"vlc-wrapper {url} --play-and-exit"
+        cmd_player = f"vlc-wrapper {url} --no-audio --play-and-exit"
         pkill_cmd = "pkill -f vlc-wrapper"
     elif reproductor == "ffplay":
         # -autoexit cierra al terminar, -infbuf ayuda a ver cambios de red rápido
@@ -66,15 +66,15 @@ def run():
     
     # --- SIMULACIÓN DE RED DINÁMICA ---
     print("\n>>> Fase 1: Enlace estable (2.0 Mbps) - 30 segundos")
-    sleep(30) 
+    sleep(35) 
     
     print("\n>>> Fase 2: Degradación de red SDN (Bajando a 0.4 Mbps)")
     enlace.intf1.config(bw=0.4)
-    sleep(30) 
+    sleep(35) 
     
     print("\n>>> Fase 3: Recuperación de red SDN (Subiendo a 0.9 Mbps)")
     enlace.intf1.config(bw=0.9)
-    sleep(30)
+    sleep(35)
     
     # --- CIERRE DE PROCESOS AUTOMÁTICOS ---
     
@@ -84,7 +84,7 @@ def run():
     sleep(3)
     
     # Guardamos el pcap con el nombre del reproductor para no sobrescribir
-    pcap_final = f"/home/maria/mi_proyecto/captura_dinamica_{reproductor}.pcap"
+    pcap_final = f"/home/maria/tfg-plataforma-ott/captura_dinamica_{reproductor}.pcap"
     h2.cmd(f'cp /tmp/captura-h2.pcap {pcap_final}')
     print(f"[OK] Captura guardada como: {pcap_final}")
     sleep(3)
