@@ -5,6 +5,7 @@ Este repositorio contiene los archivos y scripts utilizados para el diseño, sim
 ## 📂 Estructura del Repositorio
 
 * **`hls/`**: Directorio que contiene los segmentos de video (.ts) y la lista de reproducción (.m3u8) preparados para el protocolo HTTP Live Streaming.
+* **`media/`**: Directorio que contiene los archivos de vídeo originales antes de ser procesados o segmentados para el protocolo HLS.
 * **`topo_sdn_video_streaming.py`**: Script de Python que define la topología de red en Mininet.
 * **`topo_sdn_video_streaming_dynamic_qos.py`**: Variante de la topología que incluye gestión dinámica de Calidad de Servicio (QoS).
 * **`cliente.py`**: Script para simular las peticiones de un cliente OTT y medir el rendimiento.
