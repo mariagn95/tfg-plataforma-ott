@@ -1,0 +1,5 @@
+REPORTE DE RED SDN - TFG
+========================
+Host: h2 | IP: 10.0.0.2 | Ancho de Banda: 1.6 Mbps
+Host: h3 | IP: 10.0.0.3 | Ancho de Banda: 0.8 Mbps
+Host: h4 | IP: 10.0.0.4 | Ancho de Banda: 0.4 Mbps
