@@ -10,7 +10,7 @@ Este repositorio contiene los archivos y scripts utilizados para el diseño, sim
 * **`topo_sdn_video_streaming_dynamic_qos.py`**: Variante de la topología que incluye gestión dinámica de ancho de banda, permitiendo simular variaciones de Calidad de Servicio (QoS) durante la ejecución.
 * **`cliente.py`**: Script que simula el comportamiento de un cliente OTT, automatizando la selección de calidad y permitiendo realizar capturas de tráfico para el análisis experimental.
 * **`run_experiments.sh`**: Script en Bash que automatiza la ejecución de los distintos escenarios, incluyendo el lanzamiento del controlador, la creación de la topología y la ejecución de las pruebas de streaming.
-* **`ejecutar el entorno.txt`**: Documento de apoyo que recoge los comandos necesarios para desplegar manualmente el entorno experimental.
+* **`guia_ejecucion_entorno.txt`**: Documento de apoyo que describe los comandos necesarios para desplegar manualmente el entorno experimental, incluyendo la ejecución del script principal y los requisitos de privilegios del sistema.
 
 ## 🛠️ Requisitos Técnicos
 
@@ -18,4 +18,3 @@ Para ejecutar este proyecto, es necesario contar con:
 1.  **Mininet** (Simulador de red).
 2.  Un controlador SDN (como **Ryu** o el controlador nativo de Mininet).
 3.  **Python 3.8.10**.
-4.  Servidor HTTP (módulo `http.server` de Python) para servir el contenido HLS.
