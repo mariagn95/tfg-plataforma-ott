@@ -69,7 +69,7 @@ def run():
     sleep(35) 
     
     print("\n>>> Fase 2: Degradación de red SDN (Bajando a 0.4 Mbps)")
-    enlace.intf1.config(bw=0.4)
+    enlace.intf1.config(bw=0.5)
     sleep(35) 
     
     print("\n>>> Fase 3: Recuperación de red SDN (Subiendo a 0.9 Mbps)")

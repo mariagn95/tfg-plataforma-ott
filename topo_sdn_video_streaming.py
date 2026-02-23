@@ -19,9 +19,9 @@ class VideoStreamingTopo(Topo):
 
         # Establece enlaces punto a punto entre los hosts y el switch
         self.addLink(h1, s1)
-        self.addLink(h2, s1, cls=TCLink, bw=1.6)
-        self.addLink(h3, s1, cls=TCLink, bw=0.8)
-        self.addLink(h4, s1, cls=TCLink, bw=0.4)
+        self.addLink(h2, s1, cls=TCLink, bw=1.8)
+        self.addLink(h3, s1, cls=TCLink, bw=0.9)
+        self.addLink(h4, s1, cls=TCLink, bw=0.5)
 
 # Inicialización de la red y terminales xterm
 def run():
