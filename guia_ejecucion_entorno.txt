@@ -1,0 +1,22 @@
+EJECUCIÓN DEL ENTORNO EXPERIMENTAL
+
+Para desplegar el entorno completo de pruebas de la plataforma OTT sobre SDN, se deben seguir los siguientes pasos:
+
+1. Asignar permisos de ejecución al script principal:
+
+chmod +x run_experiments.sh
+
+2. Ejecutar el script con privilegios de superusuario (necesarios para Mininet):
+
+sudo ./run_experiments.sh
+
+Este script se encarga de:
+
+- Finalizar instancias previas de Mininet.
+- Lanzar el controlador Ryu.
+- Crear la topología correspondiente (escenario estático o dinámico).
+- Iniciar el servidor HTTP.
+- Ejecutar el cliente de reproducción.
+
+La ejecución debe realizarse desde el directorio raíz del proyecto.
+

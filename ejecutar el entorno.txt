@@ -1,9 +1,0 @@
-EJECUCION DEL ENTORNO
-
-
-1. Dale permisos de ejecución:
-chmod +x run_experiments.sh
-
-2. Ejcutar el script con sudo:
-./run_experiments.sh
-
