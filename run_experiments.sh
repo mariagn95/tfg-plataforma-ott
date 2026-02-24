@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# 1. Limpieza inicial
+# 1. Limpieza inicial del entorno Mininet y procesos previos
 echo "=================================================="
 echo "   PREPARANDO ENTORNO DE EXPERIMENTACIÓN SDN      "
 echo "=================================================="
@@ -9,49 +8,56 @@ sudo pkill -f python3
 sudo pkill -f ryu-manager
 sleep 1
 
-# 2. Selección de ESCENARIO
-echo ">>> SELECCIONE EL ESCENARIO"
-echo "1) Escenario Estático (3 Clientes)"
-echo "2) Escenario Dinámico (Adaptación QoS)"
-echo "3) Salir"
-read -p "Opción: " escenario
+2. Selección de ESCENARIO con límite de reintentos
+intentos=0
+seleccion_valida=false
 
-if [ $escenario -eq 3 ]; then exit 0; fi
+while [ $intentos -lt 3 ]; do
+    echo ">>> SELECCIONE EL ESCENARIO"
+    echo "1) Escenario estático (h1 servidor, h2-h4 clientes)"
+    echo "2) Escenario dinámico (h1 servidor, h2 cliente dinámico)"
+    read -p "Opción: " escenario
 
-# 3. Lógica de Escenarios
-if [ $escenario -eq 1 ]; then
-    # --- ESCENARIO 1 ---
+    if [ "$escenario" == "1" ] || [ "$escenario" == "2" ]; then
+        seleccion_valida=true
+        break
+    else
+        intentos=$((intentos + 1))
+        if [ $intentos -lt 3 ]; then
+            echo -e "\n[!] Opción no válida. Le queda 1 intento.\n"
+        fi
+    fi
+done
+
+# 3. Lógica de ejecución (Solo si la selección fue correcta)
+if [ "$seleccion_valida" = true ]; then
+    # Lanzamiento del controlador Ryu solo tras elegir escenario
     gnome-terminal --title="Controlador Ryu" -- bash -c "ryu-manager ryu.app.simple_switch_13; exec bash" &
     sleep 5
-    echo ">>> EJECUTANDO ESCENARIO ESTÁTICO..."
-    # AQUÍ NO HAY '&': El script se para aquí hasta que cierres Mininet
-    sudo python3 topo_sdn_video_streaming.py 
 
-elif [ $escenario -eq 2 ]; then
-    # --- ESCENARIO 2 ---
-    echo ">>> SELECCIONE REPRODUCTOR"
-    echo "1) VLC"
-    echo "2) FFplay"
-    echo "3) FFmpeg"
-    read -p "Opción: " rep_opcion
-
-    case $rep_opcion in
-        1) player="vlc" ;;
-        2) player="ffplay" ;;
-        3) player="ffmpeg" ;;
-    esac
-
-    gnome-terminal --title="Controlador Ryu" -- bash -c "ryu-manager ryu.app.simple_switch_13; exec bash" &
-    sleep 5
-    echo ">>> EJECUTANDO ESCENARIO DINÁMICO CON $player..."
-    # AQUÍ TAMPOCO HAY '&': El script espera a que termines tus pruebas
-    sudo python3 topo_sdn_video_streaming_dynamic_qos.py $player
+    # Lanzamiento el escenario
+    if [ "$escenario" == "1" ]; then
+        echo ">>> EJECUTANDO ESCENARIO ESTÁTICO..."
+        sudo python3 topo_sdn_video_streaming_static.py 
+    else
+        echo ">>> EJECUTANDO ESCENARIO DINÁMICO..."
+        sudo python3 topo_sdn_video_streaming_dynamic.py
+    fi
+else
+    echo -e "\n[ERROR] Segundo intento fallido. No se ejecutará ninguna topología."
 fi
 
-# 4. Limpieza final (SOLO se ejecuta tras cerrar Mininet)
+#4. Limpieza final (Se ejecuta tras cerrar Mininet)
 echo -e "\n=================================================="
-echo "   MININET CERRADO - LIMPIANDO TODO               "
+echo "   SALIENDO - LIMPIANDO ENTORNO                   "
 echo "=================================================="
-sudo pkill -f ryu-manager
+
+# Matamos específicamente los procesos que suelen quedar abiertos
+sudo pkill -f http.server    # Mata el servidor de Python en h1
+sudo pkill -f vlc-wrapper    # Cierra cualquier VLC que se haya quedado colgado
+sudo pkill -f tcpdump        # Asegura que no queden capturas zombis
+sudo pkill -f xterm          # Cierra todas las ventanas xterm abiertas
+sudo pkill -f ryu-manager    # Cierra el controlador
+
 sudo mn -c > /dev/null 2>&1
-echo "[OK] Proceso finalizado."
+echo "[OK] Proceso finalizado. Entorno limpio."

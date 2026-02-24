@@ -12,7 +12,7 @@ sudo ./run_experiments.sh
 
 Este script se encarga de:
 
-- Finalizar instancias previas de Mininet.
+- Finalizar instancias previas.
 - Lanzar el controlador Ryu.
 - Crear la topología correspondiente (escenario estático o dinámico).
 - Iniciar el servidor HTTP.
