@@ -40,8 +40,8 @@ def run():
     h2.cmd('xterm -T "CLIENTE DINAMICO h2" -e "python3 cliente.py; bash" &')
 
     # --- INICIO DEL CICLO DE VARIACIÓN DE RED (Simulación SDN) ---
-    print(">>> Fase 1: Enlace en condiciones óptimas (2.0 Mbps) - 50s")
-    sleep(50)
+    print(">>> Fase 1: Enlace en condiciones óptimas (2.0 Mbps) - 30s")
+    sleep(30)
     
     # Simulación de congestión o limitación de políticas SDN (QoS)
     print(">>> Fase 2: Reducción drástica de ancho de banda (0.4 Mbps) - 60s")
@@ -49,9 +49,9 @@ def run():
     sleep(60)
     
     # Recuperación parcial del ancho de banda
-    print(">>> Fase 3: Restauración parcial de la capacidad (0.9 Mbps) - 60s")
+    print(">>> Fase 3: Restauración parcial de la capacidad (0.9 Mbps) - 80s")
     enlace.intf1.config(bw=0.9)
-    sleep(60)
+    sleep(80)
 
     print("\n[OK] Simulación de red dinámica completada.")
     CLI(net)       # Acceso a la consola para inspección final
