@@ -40,7 +40,7 @@ def run():
     h2.cmd('xterm -T "CLIENTE DINAMICO h2" -e "python3 cliente.py; bash" &')
     
     # Espera inicial para permitir que el cliente arranque y llene buffer
-    print("[INFO] Esperando 15 segundos para estabilizar la reproducción inicial")
+    print("[INFO] Esperando 15 segundos para estabilizar la reproducción inicial...")
     sleep(15)
     
     # --- INICIO DEL CICLO DE VARIACIÓN DE RED ---
