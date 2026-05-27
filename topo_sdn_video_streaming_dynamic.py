@@ -38,20 +38,30 @@ def run():
     # Se utiliza xterm para visualizar los logs del script cliente.py en tiempo real
     print("[INFO] Lanzando cliente h2 en modo Adaptive Bitrate (Master)...")
     h2.cmd('xterm -T "CLIENTE DINAMICO h2" -e "python3 cliente.py; bash" &')
-
-    # --- INICIO DEL CICLO DE VARIACIÓN DE RED (Simulación SDN) ---
-    print(">>> Fase 1: Enlace en condiciones óptimas (2.0 Mbps) durante 30 segundos")
+    
+    # Espera inicial para permitir que el cliente arranque y llene buffer
+    print("[INFO] Esperando 15 segundos para estabilizar la reproducción inicial sobre un enlace en condiciones moderadas...")
+    sleep(15)
+    
+    # --- INICIO DEL CICLO DE VARIACIÓN DE RED ---
+    print(">>> Fase 1: Reproducción del contenido en condiciones moderadas durante 15 segundos")
+    print("Ancho de banda actual:")
+    print(h2.cmd("tc class show dev h2-eth0"))
+    sleep(15)
+    
+    print(">>> Fase 2: Reducción drástica de ancho de banda durante 30 segundos")
+    enlace.intf1.config(bw=0.4)
+    enlace.intf2.config(bw=0.4)
+    print("Ancho de banda actual:")
+    print(h2.cmd("tc class show dev h2-eth0"))
     sleep(30)
     
-    # Simulación de congestión o limitación de políticas SDN (QoS)
-    print(">>> Fase 2: Reducción drástica de ancho de banda (0.4 Mbps) durante 60 segundos")
-    enlace.intf1.config(bw=0.4) # Reconfiguración dinámica de la interfaz sin reiniciar la red
-    sleep(60)
-    
-    # Recuperación parcial del ancho de banda
-    print(">>> Fase 3: Restauración parcial de la capacidad (0.9 Mbps) durante 80 segundos")
+    print(">>> Fase 3: Recuperación parcial de la red durante 30 segundos")
     enlace.intf1.config(bw=0.9)
-    sleep(80)
+    enlace.intf2.config(bw=0.9)
+    print("Ancho de banda actual:")
+    print(h2.cmd("tc class show dev h2-eth0"))
+    sleep(30)
 
     print("\n[OK] Simulación de red dinámica completada.")
     CLI(net)       # Acceso a la consola para inspección final
