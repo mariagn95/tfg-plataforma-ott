@@ -31,7 +31,7 @@ def main():
         recurso = "master.m3u8"
         calidad_tag = "master"
 
-    url = f"http://{SERVER_IP}:{SERVER_PORT}/{recurso}"
+    url = f"http://{SERVER_IP}:{SERVER_PORT}/{recurso}"   #"http://10.0.0.1:8080/master.m3u8"
     host = _get_host_name()
     timestamp = datetime.now().strftime("%H%M%S")
     

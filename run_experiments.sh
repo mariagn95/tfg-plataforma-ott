@@ -8,7 +8,7 @@ sudo pkill -f python3
 sudo pkill -f ryu-manager
 sleep 1
 
-2. Selección de ESCENARIO con límite de reintentos
+#2. Selección de ESCENARIO con límite de reintentos
 intentos=0
 seleccion_valida=false
 

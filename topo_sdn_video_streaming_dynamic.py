@@ -49,19 +49,19 @@ def run():
     print(h2.cmd("tc class show dev h2-eth0"))
     sleep(15)
     
-    print(">>> Fase 2: Reducción drástica de ancho de banda durante 30 segundos")
+    print(">>> Fase 2: Reducción drástica de ancho de banda durante 20 segundos")
     enlace.intf1.config(bw=0.4)
     enlace.intf2.config(bw=0.4)
     print("Ancho de banda actual:")
     print(h2.cmd("tc class show dev h2-eth0"))
-    sleep(30)
+    sleep(20)
     
-    print(">>> Fase 3: Recuperación parcial de la red durante 30 segundos")
+    print(">>> Fase 3: Recuperación parcial de la red durante 15 segundos")
     enlace.intf1.config(bw=0.9)
     enlace.intf2.config(bw=0.9)
     print("Ancho de banda actual:")
     print(h2.cmd("tc class show dev h2-eth0"))
-    sleep(30)
+    sleep(15)
 
     print("\n[OK] Simulación de red dinámica completada.")
     CLI(net)       # Acceso a la consola para inspección final
